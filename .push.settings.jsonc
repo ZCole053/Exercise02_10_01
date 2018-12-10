@@ -1,0 +1,27 @@
+// Push settings file - first generated on Mon Nov 26 2018 13:02:22 GMT-0800 (PST).
+// Note: Optional items are commented out and can be uncommented if you wish to set them.
+// Preset environments are: prod, dev, stage. Custom environments (and their colours) can be created in settings.
+{
+	"env": "default",
+	"default": {
+		"service": "SFTP",
+		"options": {
+			// "timeZoneOffset": 0,
+			// "testCollisionTimeDiffs": true,
+			// "collisionUploadAction": null,
+			// "collisionDownloadAction": null,
+			// "followSymlinks": false,
+			"host": "10.106.15.144",
+			// "port": 22,
+			"username": "root",
+			 "password": "doubt-drink-37",
+			// "privateKey": "",
+			// "keyPassphrase": "",
+			"root": "/var/www/Exercise02_10_01",
+			// "keepaliveInterval": 3000,
+			// "debug": false,
+			// "fileMode": "",
+			// "sshGateway": null
+		}
+	}
+}
