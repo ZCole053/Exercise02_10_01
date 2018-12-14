@@ -1,7 +1,16 @@
 <?php
 $errorMsgs = array();
-$hostName = "10.106.15.144";
+$hostname = "localhost";
 $username = "adminer";
-$password = "doubt-drink-37";
-$DBN = "onlinestores1";
+$passwd = "doubt-drink-37";
+$DBName = "onlinestores1";
+
+
+//constructor call (new object can be fed parameters)
+$DBConnect = @new mysqli($hostname, $username, $passwd, $DBName);
+if($DBConnect->connect_error){
+    $errorMsgs[] = "Unable to connect to the database server.".
+    " Error code " . $DBConnect->connect_errno. 
+    ": ". $DBConnect->connect_error;
+}
 ?>
