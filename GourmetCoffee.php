@@ -1,12 +1,26 @@
 <?php
+//starting session to serialize object
+session_start();
 //brings into the page once will throw error
 require_once("inc_OnlineStoresDB.php");
 require_once("class_OnlineStore.php");
 
+//creating $StoreID
+$StoreID = "COFFEE";
+
 //protection code
 if(class_exists("OnlineStore")){
-    //instantiating a new class variable.
-    $Store = new OnlineStore();
+    if(isset($_SESSION['currentStore'])){
+        echo "Unserializing object.<br>";
+        $Store = unserialize($_SESSION['currentStore']);
+    }else {
+        echo "Instantiating new object.<br>";//debug
+        //instantiating a new class variable.
+        $Store = new OnlineStore();
+    }
+    //passing in the store id to the function
+    $Store->setStoreID($StoreID);
+
 }else{
     //error message setting cvariable to empty.
     $errorMsgs[] = "The <em>OnlineStore</em> class is not available!";
@@ -52,6 +66,7 @@ if(class_exists("OnlineStore")){
                 printf("<td>$%.2f</td></tr>\n", $row['price']);
             }
             echo "</table>\n";
+            $_SESSION['currentStore'] = serialize($Store);
         }
     }
 
@@ -68,9 +83,9 @@ if(class_exists("OnlineStore")){
 
 <!-- close connection -->
 <?php
-if(!$DBConnect->connect_error){
-    echo "<p>Closing Database <em>$DBName</em>.</p>\n";
-    $DBConnect->close();
-}
+// if(!$DBConnect->connect_error){
+//     echo "<p>Closing Database <em>$DBName</em>.</p>\n";
+//     $DBConnect->close();
+// }
 
 ?>
