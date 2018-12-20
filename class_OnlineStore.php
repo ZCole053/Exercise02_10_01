@@ -55,12 +55,62 @@ class OnlineStore{
                     $this->inventory[$row['productID']]['price'] = $row['price'];
                     $this->shoppingCart[$row['productID']] = 0;
                 }
-echo "<pre>\n";
-print_r($this->inventory);
-print_r($this->shoppingCart);
-echo "</pre>\n";
             }
        }
+    }
+//a getter that just gets things nothing from the properties
+    public function getStoreInformation(){
+        $retval = false;
+        if($this->storeID != ""){
+            $TableName = "storeinfo";
+            $SQLstring = "SELECT * FROM $TableName".
+            " WHERE storeID='". $this->storeID.
+            "'";
+            $QueryResult = $this->DBConnect->query($SQLstring);
+            if($QueryResult){
+                $retval = $QueryResult->fetch_assoc();
+            }
+        }
+        return $retval;
+    }
+
+    //creating a table and putting things into the shopping cart
+    public function getProductList(){
+        $retval =false;
+        $subtotal = 0;
+        if(count($this->inventory) > 0){
+            echo "<table width='100%'>\n";
+            echo "<tr>\n";
+            echo "<th>Product</th>";
+            echo "<th>Description</th>";
+            echo "<th>Price Each</th>";
+            echo "<th># in Cart</th>";
+            echo "<th>Total Price</th>";
+            echo "<th>&nbsp;</th>";
+            echo "</tr>\n";
+            foreach($this->inventory as $ID => $info) {
+                echo "<tr><td>". htmlentities($info['name']).
+                "</td>\n";
+                echo "<td>". htmlentities($info['description']).
+                "</td>\n";
+                printf("<td class='currency'>$%.2f</td>\n", $info['price']);
+                echo "<td class='currency'>".
+                $this->shoppingCart[$ID]. "</td>";
+                printf("<td class='currency'>$%.2f</td>\n", $info['price'] *
+                 $this->shoppingCart[$ID]);
+                 echo "<td><a href='". $_SERVER['SCRIPT_NAME']. 
+                 "?PHPSESSID=". session_id(). "&ItemToAdd=$ID'>Add Item</a></td>";
+                 $subtotal += ($info['price'] * $this->shoppingCart[$ID]);
+                 echo "</tr>\n";
+            }
+            echo "<tr><td colspan='4'>Subtotal</td>";
+            printf("<td class='currency'>$%.2f</td>\n", $subtotal);
+            echo "<td>&nbsp;</td></tr>";
+            echo "</table>\n";
+            $retval=true;
+        }
+        return($retval);
+
     }
 }
 
