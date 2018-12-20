@@ -6,7 +6,7 @@ session_start();
 require_once("class_OnlineStore.php");
 
 //creating $StoreID
-$StoreID = "COFFEE";
+$StoreID = "ELECBOUT";
 $storeInfo = array();
 
 //protection code

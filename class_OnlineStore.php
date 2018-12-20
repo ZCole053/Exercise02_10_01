@@ -112,6 +112,13 @@ class OnlineStore{
         return($retval);
 
     }
+//adds item to our shopping cart
+    public function addItem(){
+        $prodID = $_GET['ItemToAdd'];
+        if(array_key_exists($prodID, $this->shoppingCart)){
+            $this->shoppingCart[$prodID] += 1;
+        }
+    }
 }
 
 
